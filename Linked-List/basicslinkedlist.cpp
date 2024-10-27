@@ -148,6 +148,37 @@ DNode *addNodeAtPos(int val, DNode *head, int pos)
     return head;
 }
 
+// Q. Deletion from Doubly Linked List
+DNode *deleteFromPos(DNode *head, int pos)
+{
+    int posIs = 1;
+    DNode *curNode = head;
+    while (posIs != pos)
+    {
+        posIs++;
+        curNode = curNode->next;
+    }
+
+    // if the node points to the head
+    if (curNode->prev == NULL)
+    {
+        head = head->next;
+        head->prev = NULL;
+    }
+    else if (curNode->next == NULL)
+    {
+        curNode = curNode->prev;
+        curNode->next = NULL;
+    }
+    else
+    {
+        curNode->prev->next = curNode->next;
+        curNode->next->prev = curNode->prev;
+    }
+
+    return head;
+}
+
 int main()
 {
     vector<int> arr = {2, 4, 5, 7, 3, 8, 9};
@@ -170,5 +201,22 @@ int main()
     cout << endl;
 
     dHead = addNodeAtPos(1, dHead, 7);
+    printDLL(dHead);
+
+    cout << endl;
+
+    dHead = deleteFromPos(dHead, 7);
+    printDLL(dHead);
+
+    cout << endl;
+
+    dHead = deleteFromPos(dHead, 1);
+
+    int last = lengthOfDLL(dHead);
+    dHead = deleteFromPos(dHead, last);
+    printDLL(dHead);
+    cout << endl;
+    last = lengthOfDLL(dHead);
+    dHead = deleteFromPos(dHead, last);
     printDLL(dHead);
 }
