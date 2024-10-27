@@ -109,6 +109,7 @@ void printDLL(DNode *head)
         cout << ptr->data << " ";
         ptr = ptr->next;
     }
+    cout << endl;
     return;
 }
 
@@ -179,6 +180,36 @@ DNode *deleteFromPos(DNode *head, int pos)
     return head;
 }
 
+// Q. Reverse a Doubly Linked List
+DNode *reverseDLL(DNode *head)
+{
+    // Your code here
+    if (head->next == NULL)
+    {
+        return head;
+    }
+
+    DNode *curNode = head->next;
+
+    while (curNode->next != NULL)
+    {
+        DNode *nextNode = curNode->next;
+        curNode->next = curNode->prev;
+        curNode->prev = nextNode;
+
+        curNode = nextNode;
+    }
+
+    curNode->next = curNode->prev;
+    curNode->prev = NULL;
+
+    head->prev = head->next;
+    head->next = NULL;
+
+    head = curNode;
+    return head;
+}
+
 int main()
 {
     vector<int> arr = {2, 4, 5, 7, 3, 8, 9};
@@ -193,29 +224,24 @@ int main()
     DNode *dHead = convertArrToDLL(arr);
     printDLL(dHead);
 
-    cout << endl;
-
     dHead = addNodeAtPos(6, dHead, 3);
     printDLL(dHead);
-
-    cout << endl;
 
     dHead = addNodeAtPos(1, dHead, 7);
     printDLL(dHead);
 
-    cout << endl;
+    dHead = reverseDLL(dHead);
+    printDLL(dHead);
 
     dHead = deleteFromPos(dHead, 7);
     printDLL(dHead);
-
-    cout << endl;
 
     dHead = deleteFromPos(dHead, 1);
 
     int last = lengthOfDLL(dHead);
     dHead = deleteFromPos(dHead, last);
     printDLL(dHead);
-    cout << endl;
+
     last = lengthOfDLL(dHead);
     dHead = deleteFromPos(dHead, last);
     printDLL(dHead);
